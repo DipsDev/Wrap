@@ -1,6 +1,8 @@
 package server.commands;
 
 import server.WrapDB;
+import server.models.datatypes.DataType;
+import server.utils.Responses;
 
 import java.util.HashMap;
 
@@ -11,6 +13,8 @@ public class CommandHandler {
 
     private CommandHandler() {
         this.commands = new HashMap<>();
+        this.commands.put("get", new GetCommand());
+        this.commands.put("set", new SetCommand());
     }
 
     public static CommandHandler getInstance() {
@@ -22,9 +26,15 @@ public class CommandHandler {
 
     public String handle(String[] args) {
         if (!this.commands.containsKey(args[0])) {
-            return null; //TODO: Return an error message indicating the command was not found
+            return Responses.COMMAND_NOT_FOUND.getParsed();
         }
-        return this.commands.get(args[0]).execute(args);
+        Command cmd = this.commands.get(args[0]);
+        if (cmd.getArgsCount() + 1 > args.length) {
+            return Responses.NOT_ENOUGH_ARGS.getParsed();
+        }
+        DataType returnType = cmd.execute(args);
+        return returnType.encode();
+
 
     }
 }

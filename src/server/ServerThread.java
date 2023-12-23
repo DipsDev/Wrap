@@ -6,6 +6,8 @@ import server.commands.CommandHandler;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.net.Socket;
 
 
@@ -18,18 +20,19 @@ public class ServerThread  extends Thread {
     }
     @Override
     public void run() {
-        while (true) {
-            try {
+        try {
+            PrintWriter writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()), true);
+            while (true) {
                 InputStream input = socket.getInputStream();
                 String[] commandArguments = new Parser(input).parseBulkStringArray();
                 CommandHandler commandHandler = CommandHandler.getInstance();
-                commandHandler.handle(commandArguments);
-
-
-            } catch (IOException ioe) {
-                throw new RuntimeException(ioe.getMessage());
-
+                String encodedString = commandHandler.handle(commandArguments);
+                writer.print(encodedString);
+                writer.flush();
             }
+        }
+        catch(IOException e) {
+            e.printStackTrace();
         }
     }
 }

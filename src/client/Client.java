@@ -16,6 +16,14 @@ public class Client {
             String parsedCommand = ClientParser.parseClientInputCommands(reader);
             writer.print(parsedCommand);
             writer.flush();
+            try {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(client.getInputStream()));
+                System.out.println(reader.readLine());
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
+            }
+
+
 
         }
 

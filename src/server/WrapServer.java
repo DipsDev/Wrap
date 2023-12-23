@@ -1,16 +1,10 @@
-import models.ServerThread;
+package server;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Hashtable;
-public class Main {
+
+public class WrapServer {
     public static void main(String[] args) {
         try {
 
@@ -19,8 +13,6 @@ public class Main {
 
             while (true) {
                 Socket socket = server.accept();
-
-
                 new ServerThread(socket).start();
 
             }

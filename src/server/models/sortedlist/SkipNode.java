@@ -1,4 +1,4 @@
-package models.SkipList;
+package server.models.sortedlist;
 
 public class SkipNode {
 

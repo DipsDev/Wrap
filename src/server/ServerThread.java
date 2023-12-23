@@ -1,9 +1,12 @@
-package models;
+package server;
+
+import server.Parser;
+import server.WrapDB;
+import server.commands.CommandHandler;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
-import java.util.Arrays;
 
 
 public class ServerThread  extends Thread {
@@ -18,8 +21,10 @@ public class ServerThread  extends Thread {
         while (true) {
             try {
                 InputStream input = socket.getInputStream();
-                Parser parser = new Parser(input);
-                System.out.println(Arrays.toString(parser.parseBulkStringArray()));
+                String[] commandArguments = new Parser(input).parseBulkStringArray();
+                CommandHandler commandHandler = CommandHandler.getInstance();
+                commandHandler.handle(commandArguments);
+
 
             } catch (IOException ioe) {
                 throw new RuntimeException(ioe.getMessage());

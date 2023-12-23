@@ -1,0 +1,48 @@
+package client;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+
+public class ClientParser {
+    public final static String terminator = "\r\n";
+    public static String parseClientInputCommands(BufferedReader reader) throws IOException {
+        StringBuilder builder = new StringBuilder();
+        StringBuilder current = new StringBuilder();
+        String commands = reader.readLine();
+
+        int currentWordCount = 0;
+        int arrCount = 0;
+
+
+        for (int i = 0; i<commands.length(); i++) {
+            if (commands.charAt(i) == ' ') {
+                arrCount++;
+                builder.append("$")
+                        .append(currentWordCount)
+                        .append(terminator)
+                        .append(current.toString())
+                        .append(terminator);
+                current.setLength(0);
+                currentWordCount = 0;
+            } else if (i == commands.length() - 1) {
+                    current.append(commands.charAt(i));
+                    currentWordCount++;
+                    arrCount++;
+                    builder.append("$")
+                            .append(currentWordCount)
+                            .append(terminator)
+                            .append(current.toString())
+                            .append(terminator);
+                    current.setLength(0);
+                    currentWordCount = 0;
+            }
+            else {
+                current.append(commands.charAt(i));
+                currentWordCount++;
+            }
+        }
+        return "*" + arrCount + terminator + builder;
+
+
+    }
+}

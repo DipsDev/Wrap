@@ -1,7 +1,4 @@
-package SkipList;
-
-import java.util.ArrayList;
-import java.util.List;
+package models.SkipList;
 
 public class SkipNode {
 

@@ -1,4 +1,4 @@
-package SkipList;
+package models.SkipList;
 
 import java.util.Random;
 

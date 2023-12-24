@@ -18,10 +18,11 @@ public class Parser {
        int val = 0;
        int current;
        while ((current = this.inputStream.read()) != terminator) { // allow n digits length
-           val += current;
+
+           val = (val * 10) + (((char) current) - '0');
        }
-       this.inputStream.skip(1); // skips the terminator
-       return Integer.parseInt(String.valueOf((char) val));
+       this.inputStream.read(); // skips the terminator
+       return val;
    }
 
    public String parseBulkString() throws IOException {
@@ -34,7 +35,8 @@ public class Parser {
         buffer[total] = (char) in;
         total++;
       }
-      this.inputStream.skipNBytes(2);
+      this.inputStream.read();
+      this.inputStream.read();
       return new String(buffer);
    }
    public String[] parseBulkStringArray() throws IOException {

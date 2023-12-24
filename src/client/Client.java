@@ -12,7 +12,7 @@ public class Client {
         PrintWriter writer = new PrintWriter(new OutputStreamWriter(client.getOutputStream()), true);
 
         while (true)  {
-            System.out.print("127.0.0.1> ");
+            System.out.print("127.0.0.1:6379> ");
             String parsedCommand = ClientParser.parseClientInputCommands(reader);
             if (parsedCommand.charAt(1) == '0') {
                 continue;

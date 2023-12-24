@@ -15,12 +15,13 @@ public class ClientParser {
         while ((ch = inputStream.read()) != 13) {
             builder.append((char) ch);
         }
-        inputStream.skip(1);
+        inputStream.read();
         return builder.toString();
     }
 
     public static String parseNull(InputStream inputStream) throws IOException {
-        inputStream.skipNBytes(2);
+        inputStream.read();
+        inputStream.read();
         return "null";
     }
 

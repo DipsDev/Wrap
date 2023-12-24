@@ -2,6 +2,7 @@ package server.commands;
 
 import server.WrapDB;
 import server.models.datatypes.DataType;
+import server.models.datatypes.Null;
 import server.models.datatypes.SimpleError;
 import server.models.datatypes.SimpleString;
 
@@ -20,7 +21,7 @@ public class GetCommand implements Command {
     public DataType execute(String[] args) {
         String data = WrapDB.getInstance().getRecord(args[1]);
         if (data == null) {
-            return new SimpleError("Key was not found");
+            return new Null();
         }
         return new SimpleString(data);
     }

@@ -2,9 +2,29 @@ package client;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class ClientParser {
     public final static String terminator = "\r\n";
+
+
+
+    public static String parseSimpleString(InputStream inputStream) throws IOException {
+        StringBuilder builder = new StringBuilder();
+        int ch;
+        while ((ch = inputStream.read()) != 13) {
+            builder.append((char) ch);
+        }
+        inputStream.skip(1);
+        return builder.toString();
+    }
+
+    public static String parseNull(InputStream inputStream) throws IOException {
+        inputStream.skipNBytes(2);
+        return "null";
+    }
+
+
     public static String parseClientInputCommands(BufferedReader reader) throws IOException {
         StringBuilder builder = new StringBuilder();
         StringBuilder current = new StringBuilder();
@@ -42,7 +62,5 @@ public class ClientParser {
             }
         }
         return "*" + arrCount + terminator + builder;
-
-
     }
 }

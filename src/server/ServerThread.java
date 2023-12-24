@@ -16,7 +16,6 @@ public class ServerThread  extends Thread {
 
     public ServerThread(Socket socket) {
         this.socket = socket;
-
     }
     @Override
     public void run() {
@@ -32,7 +31,7 @@ public class ServerThread  extends Thread {
             }
         }
         catch(IOException e) {
-            e.printStackTrace();
+            System.out.println("Socket Disconnected");
         }
     }
 }

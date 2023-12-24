@@ -1,4 +1,4 @@
-package server.models.sortedlist;
+package server.models.datatypes.sortedlist;
 
 import java.util.Random;
 

@@ -14,11 +14,14 @@ public class Client {
         while (true)  {
             System.out.print("127.0.0.1> ");
             String parsedCommand = ClientParser.parseClientInputCommands(reader);
+            if (parsedCommand.charAt(1) == '0') {
+                continue;
+            }
             writer.print(parsedCommand);
             writer.flush();
             try {
-                BufferedReader reader = new BufferedReader(new InputStreamReader(client.getInputStream()));
-                System.out.println(reader.readLine());
+                ClientReader reader = new ClientReader(client.getInputStream());
+                System.out.println(reader.parse());
             } catch (IOException ioe) {
                 ioe.printStackTrace();
             }

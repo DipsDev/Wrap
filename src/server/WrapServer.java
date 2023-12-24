@@ -14,7 +14,6 @@ public class WrapServer {
             while (true) {
                 Socket socket = server.accept();
                 new ServerThread(socket).start();
-
             }
 
 
@@ -24,7 +23,6 @@ public class WrapServer {
 
 
         } catch(IOException ioe) {
-            ioe.printStackTrace();
             System.out.println("Couldn't start Wrap server, port is already in usage");
         }
 

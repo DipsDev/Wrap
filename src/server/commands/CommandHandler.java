@@ -9,7 +9,7 @@ import java.util.HashMap;
 public class CommandHandler {
     private static CommandHandler instance;
 
-    private HashMap<String, Command> commands;
+    private final HashMap<String, Command> commands;
 
     private CommandHandler() {
         this.commands = new HashMap<>();

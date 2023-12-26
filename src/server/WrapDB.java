@@ -1,14 +1,13 @@
 package server;
 
-import server.commands.Command;
-import server.models.datatypes.DataType;
+import server.models.storetypes.StoreType;
 
 import java.util.HashMap;
 
 public class WrapDB {
     private static WrapDB instance;
 
-    private HashMap<String, String> hashMap;
+    private HashMap<String, StoreType<?>> hashMap;
 
     private final Object lock;
 
@@ -17,15 +16,21 @@ public class WrapDB {
         this.lock = new Object();
     }
 
-    public void setRecord(String name, String value) {
+    public <E, T extends StoreType<E>> void create(String name, T value) {
+        this.hashMap.put(name, value);
+    }
+
+    public boolean exists(String name) {
         synchronized (lock) {
-            this.hashMap.put(name, value);
+            return this.hashMap.containsKey(name);
         }
     }
 
-    public String getRecord(String name) {
+    public StoreType<?> get(String name) {
         synchronized (lock) {
             return this.hashMap.get(name);
+
+
         }
     }
 

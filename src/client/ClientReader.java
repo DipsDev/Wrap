@@ -21,6 +21,9 @@ public class ClientReader {
         if (sign == DataTypes.Null.getSign()) {
             return ClientParser.parseNull(this.inputStream);
         }
+        if (sign == DataTypes.SimpleError.getSign()) {
+            return ClientParser.parseSimpleError(this.inputStream);
+        }
         return "";
     }
 

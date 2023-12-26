@@ -19,6 +19,16 @@ public class ClientParser {
         return builder.toString();
     }
 
+    public static String parseSimpleError(InputStream inputStream) throws IOException {
+        StringBuilder builder = new StringBuilder();
+        int ch;
+        while ((ch = inputStream.read()) != 13) {
+            builder.append((char) ch);
+        }
+        inputStream.read();
+        return builder.toString();
+    }
+
     public static String parseNull(InputStream inputStream) throws IOException {
         inputStream.read();
         inputStream.read();

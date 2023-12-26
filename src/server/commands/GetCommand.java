@@ -5,6 +5,8 @@ import server.models.datatypes.DataType;
 import server.models.datatypes.Null;
 import server.models.datatypes.SimpleError;
 import server.models.datatypes.SimpleString;
+import server.models.storetypes.StoreType;
+import server.models.storetypes.StringStore;
 
 public class GetCommand implements Command {
     @Override
@@ -19,10 +21,13 @@ public class GetCommand implements Command {
 
     @Override
     public DataType execute(String[] args) {
-        String data = WrapDB.getInstance().getRecord(args[1]);
+        StoreType data = WrapDB.getInstance().get(args[1]);
         if (data == null) {
             return new Null();
         }
-        return new SimpleString(data);
+        if (!(data instanceof StringStore)) {
+            return new SimpleError("ERR Get command only supports strings");
+        }
+        return data.prepare();
     }
 }

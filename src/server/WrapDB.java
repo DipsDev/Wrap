@@ -16,7 +16,7 @@ public class WrapDB {
         this.lock = new Object();
     }
 
-    public <E, T extends StoreType<E>> void create(String name, T value) {
+    public <T extends StoreType<?>> void create(String name, T value) {
         this.hashMap.put(name, value);
     }
 

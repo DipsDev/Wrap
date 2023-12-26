@@ -4,9 +4,24 @@ import server.models.datatypes.DataType;
 
 public interface StoreType<T> {
 
-    public DataType prepare();
-    public void put(T value);
-    public T get(String name);
+    /***
+     * Prepares the store as sendable datatype
+     * @return The store as a sendable datatype
+     */
+    DataType prepare();
+
+    /***
+     * Puts the value onto the store
+     * @param value
+     */
+    void put(T value);
+
+    /***
+     * Gets the value by name
+     * @param name the name to be searched for
+     * @return the found data
+     */
+    T get(String name);
 
 
 

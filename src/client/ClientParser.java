@@ -3,6 +3,7 @@ package client;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 
 public class ClientParser {
     public final static String terminator = "\r\n";
@@ -35,6 +36,29 @@ public class ClientParser {
         return "null";
     }
 
+    public static int parseLength(InputStream inputStream) throws IOException {
+        int val = 0;
+        int current;
+        while ((current = inputStream.read()) != 13) { // allow n digits length
+
+            val = (val * 10) + (((char) current) - '0');
+        }
+        inputStream.read(); // skips the terminator
+        return val;
+    }
+    public static String parseArray(InputStream inputStream) throws IOException {
+        int arrayLength = parseLength(inputStream);
+        StringBuilder builder = new StringBuilder();
+        int i = 0;
+        while (i < arrayLength) {
+            builder.append(i + 1).append(") ").append(new ClientReader(inputStream).parse()).append("\n");
+            i++;
+
+        }
+        return builder.toString();
+
+    }
+
 
     public static String parseClientInputCommands(BufferedReader reader) throws IOException {
         StringBuilder builder = new StringBuilder();
@@ -51,7 +75,7 @@ public class ClientParser {
                 builder.append("$")
                         .append(currentWordCount)
                         .append(terminator)
-                        .append(current.toString())
+                        .append(current)
                         .append(terminator);
                 current.setLength(0);
                 currentWordCount = 0;
@@ -62,7 +86,7 @@ public class ClientParser {
                     builder.append("$")
                             .append(currentWordCount)
                             .append(terminator)
-                            .append(current.toString())
+                            .append(current)
                             .append(terminator);
                     current.setLength(0);
                     currentWordCount = 0;

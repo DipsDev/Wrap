@@ -1,8 +1,12 @@
 package server.models.storetypes;
 
+import server.models.datatypes.Array;
 import server.models.datatypes.DataType;
+import server.models.datatypes.SimpleString;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 public class HashStore implements StoreType<StoreType<?>> {
 
@@ -15,7 +19,16 @@ public class HashStore implements StoreType<StoreType<?>> {
 
     @Override
     public DataType prepare() {
-        return null;
+        Array arr = new Array();
+        Iterator it = this.map.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<String, StoreType<?>> pair = (Map.Entry) it.next();
+            arr.add(new SimpleString(pair.getKey()));
+            arr.add(pair.getValue().prepare());
+            it.remove();
+        }
+        return arr;
+
     }
 
     @Override

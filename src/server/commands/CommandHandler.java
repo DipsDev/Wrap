@@ -17,6 +17,7 @@ public class CommandHandler {
         this.commands.put("set", new SetCommand());
         this.commands.put("hset", new HsetCommand());
         this.commands.put("hget", new HgetCommand());
+        this.commands.put("hgetall", new HgetallCommand());
     }
 
     public static CommandHandler getInstance() {

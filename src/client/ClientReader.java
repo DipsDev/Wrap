@@ -24,16 +24,11 @@ public class ClientReader {
         if (sign == DataTypes.SimpleError.getSign()) {
             return ClientParser.parseSimpleError(this.inputStream);
         }
+        if (sign == DataTypes.Array.getSign()) {
+            return ClientParser.parseArray(this.inputStream);
+        }
         return "";
     }
 
-    public int parseLength() throws IOException {
-        int val = 0;
-        int current;
-        while ((current = this.inputStream.read()) != 13) { // allow n digits length
-            val += current;
-        }
-        this.inputStream.skip(1); // skips the terminator
-        return Integer.parseInt(String.valueOf((char) val));
-    }
+
 }

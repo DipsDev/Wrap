@@ -1,4 +1,4 @@
-package server.models.datatypes.sortedlist;
+package server.models.storetypes.sortedlist;
 
 public class SkipNode {
 

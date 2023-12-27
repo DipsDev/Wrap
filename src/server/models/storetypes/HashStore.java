@@ -31,6 +31,16 @@ public class HashStore implements StoreType<StoreType<?>> {
 
     }
 
+    public DataType prepareKeys() {
+        Array arr = new Array();
+        Iterator<String> it = this.map.keySet().iterator();
+        while (it.hasNext()) {
+            arr.add(new SimpleString(it.next()));
+            it.remove();
+        }
+        return arr;
+    }
+
     @Override
     public void put(StoreType<?> value) {
     }

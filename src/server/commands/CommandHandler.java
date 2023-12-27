@@ -15,9 +15,12 @@ public class CommandHandler {
         this.commands = new HashMap<>();
         this.commands.put("get", new GetCommand());
         this.commands.put("set", new SetCommand());
+
+
         this.commands.put("hset", new HsetCommand());
         this.commands.put("hget", new HgetCommand());
         this.commands.put("hgetall", new HgetallCommand());
+        this.commands.put("hkeys", new HkeysCommand());
     }
 
     public static CommandHandler getInstance() {

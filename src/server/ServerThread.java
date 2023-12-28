@@ -21,10 +21,10 @@ public class ServerThread  extends Thread {
     public void run() {
         try {
             PrintWriter writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()), true);
+            CommandHandler commandHandler = CommandHandler.getInstance();
             while (true) {
                 InputStream input = socket.getInputStream();
                 String[] commandArguments = new Parser(input).parseBulkStringArray();
-                CommandHandler commandHandler = CommandHandler.getInstance();
                 String encodedString = commandHandler.handle(commandArguments);
                 writer.print(encodedString);
                 writer.flush();

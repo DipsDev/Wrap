@@ -27,7 +27,10 @@ public class ClientReader {
         if (sign == DataTypes.Array.getSign()) {
             return ClientParser.parseArray(this.inputStream);
         }
-        System.out.println("NOT IMPLEMENTED " + sign);
+        if (sign == DataTypes.Integer.getSign()) {
+            return ClientParser.parseInteger(this.inputStream);
+        }
+        System.out.println("NOT IMPLEMENTED " + (char) sign);
         return "";
     }
 

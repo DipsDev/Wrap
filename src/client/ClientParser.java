@@ -20,6 +20,16 @@ public class ClientParser {
         return builder.toString();
     }
 
+    public static String parseInteger(InputStream inputStream) throws IOException {
+        int sum = 0;
+        int ch;
+        while ((ch = inputStream.read()) != 13) {
+            sum *= 10;
+            sum += ((char) ch) - '0';
+        }
+        return "(Integer) " + sum;
+    }
+
     public static String parseSimpleError(InputStream inputStream) throws IOException {
         StringBuilder builder = new StringBuilder();
         int ch;

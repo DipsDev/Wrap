@@ -5,6 +5,7 @@ import server.models.datatypes.DataType;
 import server.models.datatypes.SimpleError;
 import server.models.datatypes.SimpleString;
 import server.models.storetypes.HashStore;
+import server.models.storetypes.IntegerStore;
 import server.models.storetypes.StoreType;
 import server.models.storetypes.StringStore;
 
@@ -19,12 +20,19 @@ public class HsetCommand implements Command {
         return 3;
     }
 
+    private StoreType<?> matchStore(String arg) {
+        if (IntegerStore.pattern.matcher(arg).matches()) {
+            return new IntegerStore(Integer.parseInt(arg));
+        }
+        return new StringStore(arg);
+    }
+
     @Override
     public DataType execute(String[] args) {
         StoreType data = WrapDB.getInstance().get(args[1]);
         if (data == null) {
             HashStore store = new HashStore();
-            store.put(args[2], new StringStore(args[3]));
+            store.put(args[2], matchStore(args[3]));
             WrapDB.getInstance().create(args[1], store);
             return new SimpleString("OK");
         }
@@ -32,7 +40,7 @@ public class HsetCommand implements Command {
             return new SimpleError("NOTYPE Hset commands supports only hashmaps");
         }
         HashStore store = (HashStore) data;
-        store.put(args[2], new StringStore(args[3]));
+        store.put(args[2], matchStore(args[3]));
         return new SimpleString("OK");
 
 

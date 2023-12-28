@@ -20,6 +20,10 @@ public class SetCommand implements Command {
 
     @Override
     public DataType execute(String[] args) {
+        if (!args[2].startsWith("\"") || !args[2].endsWith("\"")) {
+            return new SimpleError("ERR Set command supports only strings");
+        }
+        args[2] = args[2].substring(1, args[2].length() - 1);
         if (!WrapDB.getInstance().exists(args[1])) {
             WrapDB.getInstance().create(args[1], new StringStore(args[2]));
             return new SimpleString("OK");

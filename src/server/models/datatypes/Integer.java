@@ -10,6 +10,6 @@ public class Integer extends DataType {
 
     @Override
     public String encode() {
-        return this.sign + value + terminator;
+        return ":" + value + terminator;
     }
 }

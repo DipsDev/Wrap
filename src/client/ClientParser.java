@@ -27,6 +27,7 @@ public class ClientParser {
             sum *= 10;
             sum += ((char) ch) - '0';
         }
+        inputStream.read();
         return "(Integer) " + sum;
     }
 

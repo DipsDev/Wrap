@@ -20,13 +20,11 @@ public class HashStore implements StoreType<StoreType<?>> {
     @Override
     public DataType prepare() {
         Array arr = new Array();
-        Iterator it = this.map.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry<String, StoreType<?>> pair = (Map.Entry) it.next();
+        for (Map.Entry<String, StoreType<?>> pair : this.map.entrySet()) {
             arr.add(new SimpleString(pair.getKey()));
             arr.add(pair.getValue().prepare());
-            it.remove();
         }
+
         return arr;
 
     }

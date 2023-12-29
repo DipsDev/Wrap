@@ -7,17 +7,19 @@ import java.util.HashMap;
 public class WrapDB {
     private static WrapDB instance;
 
-    private HashMap<String, StoreType<?>> hashMap;
+    private final HashMap<String, StoreType<?>> hashMap;
 
-    private final Object lock;
+    private final Object lock = new Object();
 
     private WrapDB() {
         this.hashMap = new HashMap<>();
-        this.lock = new Object();
     }
 
-    public <T extends StoreType<?>> void create(String name, T value) {
-        this.hashMap.put(name, value);
+    public void create(String name, StoreType<?> value) {
+        synchronized (lock) {
+            this.hashMap.put(name, value);
+        }
+
     }
 
     public boolean exists(String name) {
@@ -29,8 +31,6 @@ public class WrapDB {
     public StoreType<?> get(String name) {
         synchronized (lock) {
             return this.hashMap.get(name);
-
-
         }
     }
 

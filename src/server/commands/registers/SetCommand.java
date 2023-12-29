@@ -1,6 +1,8 @@
-package server.commands;
+package server.commands.registers;
 
 import server.WrapDB;
+import server.commands.Command;
+import server.commands.RegisteredCommand;
 import server.models.datatypes.DataType;
 import server.models.datatypes.SimpleError;
 import server.models.datatypes.SimpleString;

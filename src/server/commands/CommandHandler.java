@@ -11,6 +11,9 @@ import java.util.HashMap;
 import java.util.ServiceLoader;
 
 public class CommandHandler {
+
+    private static String COMMANDS_LOCATION_PACKAGE = "server.commands.registers";
+    private static String COMMANDS_LOCATION_URL = "server/commands/registers";
     private static CommandHandler instance;
 
     private final HashMap<String, Command> commands;
@@ -26,11 +29,11 @@ public class CommandHandler {
     }
 
     private void registerCommands() throws ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException {
-        ClassLoader loader = Thread.currentThread().getContextClassLoader();
-        URL resource = loader.getResource("server/commands");
+        ClassLoader loader = ClassLoader.getSystemClassLoader();
+        URL resource = loader.getResource(COMMANDS_LOCATION_URL);
         File folder = new File(resource.getFile());
         for (final File fileEntry : folder.listFiles()) {
-            String className = "server.commands." + fileEntry.getName().substring(0, fileEntry.getName().length() - 6);
+            String className = COMMANDS_LOCATION_PACKAGE + fileEntry.getName().substring(0, fileEntry.getName().length() - 6);
             Class<?> commandClass = Class.forName(className);
             if (commandClass.isAnnotationPresent(RegisteredCommand.class) && Command.class.isAssignableFrom(commandClass)) {
                 Command command = (Command) commandClass.getDeclaredConstructors()[0].newInstance();

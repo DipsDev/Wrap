@@ -1,16 +1,18 @@
-package server.commands;
+package server.commands.registers;
 
 import server.WrapDB;
+import server.commands.Command;
+import server.commands.RegisteredCommand;
 import server.models.datatypes.DataType;
 import server.models.datatypes.Null;
 import server.models.datatypes.SimpleError;
 import server.models.storetypes.HashStore;
 import server.models.storetypes.StoreType;
 @RegisteredCommand
-public class HkeysCommand implements Command {
+public class HgetallCommand implements Command {
     @Override
     public String getName() {
-        return "hkeys";
+        return "hgetall";
     }
 
     @Override
@@ -28,6 +30,6 @@ public class HkeysCommand implements Command {
             return new SimpleError("NOTYPE Hget commands supports only hashmaps");
         }
         HashStore store = (HashStore) data;
-        return store.prepareKeys();
+        return store.prepare();
     }
 }

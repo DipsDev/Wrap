@@ -8,7 +8,7 @@ public class StringStore implements StoreType<String> {
     private String value;
 
     public StringStore(String value) {
-        this.value = value;
+        this.value = value.substring(1, value.length() - 1);
     }
 
 

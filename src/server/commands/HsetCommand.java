@@ -24,15 +24,22 @@ public class HsetCommand implements Command {
         if (IntegerStore.pattern.matcher(arg).matches()) {
             return new IntegerStore(Integer.parseInt(arg));
         }
-        return new StringStore(arg);
+        if (arg.charAt(0) == '"' && arg.charAt(arg.length() - 1) == '"') {
+            return new StringStore(arg);
+        }
+        return null;
     }
 
     @Override
     public DataType execute(String[] args) {
         StoreType data = WrapDB.getInstance().get(args[1]);
         if (data == null) {
+            StoreType<?> newStore = matchStore(args[3]);
+            if (newStore == null) {
+                return new SimpleError("NOTYPE Unknown type was given");
+            }
             HashStore store = new HashStore();
-            store.put(args[2], matchStore(args[3]));
+            store.put(args[2], newStore);
             WrapDB.getInstance().create(args[1], store);
             return new SimpleString("OK");
         }
@@ -40,7 +47,11 @@ public class HsetCommand implements Command {
             return new SimpleError("NOTYPE Hset commands supports only hashmaps");
         }
         HashStore store = (HashStore) data;
-        store.put(args[2], matchStore(args[3]));
+        StoreType<?> newStore = matchStore(args[3]);
+        if (newStore == null) {
+            return new SimpleError("NOTYPE Unknown type was given");
+        }
+        store.put(args[2], newStore);
         return new SimpleString("OK");
 
 

@@ -6,7 +6,7 @@ import server.models.datatypes.Null;
 import server.models.datatypes.SimpleError;
 import server.models.storetypes.HashStore;
 import server.models.storetypes.StoreType;
-
+@RegisteredCommand
 public class HkeysCommand implements Command {
     @Override
     public String getName() {

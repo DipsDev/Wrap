@@ -7,7 +7,7 @@ import server.models.datatypes.SimpleError;
 import server.models.datatypes.SimpleString;
 import server.models.storetypes.StoreType;
 import server.models.storetypes.StringStore;
-
+@RegisteredCommand
 public class GetCommand implements Command {
     @Override
     public String getName() {

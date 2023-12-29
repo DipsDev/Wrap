@@ -8,7 +8,7 @@ import server.models.storetypes.HashStore;
 import server.models.storetypes.IntegerStore;
 import server.models.storetypes.StoreType;
 import server.models.storetypes.StringStore;
-
+@RegisteredCommand
 public class HsetCommand implements Command {
     @Override
     public String getName() {

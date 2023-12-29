@@ -7,6 +7,7 @@ import server.models.datatypes.SimpleString;
 import server.models.storetypes.StoreType;
 import server.models.storetypes.StringStore;
 
+@RegisteredCommand
 public class SetCommand implements Command {
     @Override
     public String getName() {

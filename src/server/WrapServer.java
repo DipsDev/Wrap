@@ -1,5 +1,7 @@
 package server;
 
+import server.commands.CommandHandler;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -10,6 +12,8 @@ public class WrapServer {
 
             ServerSocket server = new ServerSocket(6379);
             System.out.println("Wrap server is listening on port 6379");
+
+            CommandHandler.getInstance();
 
             while (true) {
                 Socket socket = server.accept();

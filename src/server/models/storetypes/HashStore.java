@@ -12,17 +12,22 @@ public class HashStore implements StoreType<StoreType<?>> {
 
     private HashMap<String, StoreType<?>> map;
 
+    private final Object lock;
+
     public HashStore() {
         this.map = new HashMap<>();
+        this.lock = new Object();
     }
 
 
     @Override
     public DataType prepare() {
         Array arr = new Array();
-        for (Map.Entry<String, StoreType<?>> pair : this.map.entrySet()) {
-            arr.add(new SimpleString(pair.getKey()));
-            arr.add(pair.getValue().prepare());
+        synchronized (lock) {
+            for (Map.Entry<String, StoreType<?>> pair : this.map.entrySet()) {
+                arr.add(new SimpleString(pair.getKey()));
+                arr.add(pair.getValue().prepare());
+            }
         }
 
         return arr;
@@ -31,10 +36,11 @@ public class HashStore implements StoreType<StoreType<?>> {
 
     public DataType prepareKeys() {
         Array arr = new Array();
-        Iterator<String> it = this.map.keySet().iterator();
-        while (it.hasNext()) {
-            arr.add(new SimpleString(it.next()));
-            it.remove();
+        synchronized (lock) {
+            for (String s : this.map.keySet()) {
+                arr.add(new SimpleString(s));
+
+            }
         }
         return arr;
     }
@@ -44,12 +50,17 @@ public class HashStore implements StoreType<StoreType<?>> {
     }
 
     public void put(String name, StoreType<?> value) {
-        this.map.put(name, value);
+        synchronized (lock) {
+            this.map.put(name, value);
+        }
+
     }
 
 
     @Override
     public StoreType<?> get(String name) {
-        return this.map.get(name);
+        synchronized (lock) {
+            return this.map.get(name);
+        }
     }
 }

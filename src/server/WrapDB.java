@@ -34,6 +34,12 @@ public class WrapDB {
         }
     }
 
+    public StoreType<?> remove(String key) {
+        synchronized (lock) {
+            return this.hashMap.remove(key);
+        }
+    }
+
 
     public static WrapDB getInstance() {
         if (instance == null) {

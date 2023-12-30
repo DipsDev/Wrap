@@ -51,7 +51,6 @@ public class ClientParser {
         int val = 0;
         int current;
         while ((current = inputStream.read()) != 13) { // allow n digits length
-
             val = (val * 10) + (((char) current) - '0');
         }
         inputStream.read(); // skips the terminator

@@ -19,7 +19,7 @@ public class StringStore implements StoreType<String> {
 
     @Override
     public void put(String value) {
-        this.value = value;
+        this.value = value.substring(1, value.length() - 1);
 
     }
 

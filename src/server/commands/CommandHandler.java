@@ -33,7 +33,7 @@ public class CommandHandler {
         URL resource = loader.getResource(COMMANDS_LOCATION_URL);
         File folder = new File(resource.getFile());
         for (final File fileEntry : folder.listFiles()) {
-            String className = COMMANDS_LOCATION_PACKAGE + fileEntry.getName().substring(0, fileEntry.getName().length() - 6);
+            String className = COMMANDS_LOCATION_PACKAGE + "." + fileEntry.getName().substring(0, fileEntry.getName().length() - 6);
             Class<?> commandClass = Class.forName(className);
             if (commandClass.isAnnotationPresent(RegisteredCommand.class) && Command.class.isAssignableFrom(commandClass)) {
                 Command command = (Command) commandClass.getDeclaredConstructors()[0].newInstance();

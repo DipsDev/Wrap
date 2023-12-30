@@ -12,8 +12,8 @@ import java.util.ServiceLoader;
 
 public class CommandHandler {
 
-    private static String COMMANDS_LOCATION_PACKAGE = "server.commands.registers";
-    private static String COMMANDS_LOCATION_URL = "server/commands/registers";
+    private static final String COMMANDS_LOCATION_PACKAGE = "server.commands.registers";
+    private static final String COMMANDS_LOCATION_URL = "server/commands/registers";
     private static CommandHandler instance;
 
     private final HashMap<String, Command> commands;
@@ -24,7 +24,7 @@ public class CommandHandler {
             this.registerCommands();
         } catch (Exception e) {
             System.out.println("Couldn't register all classes, ");
-            e.printStackTrace();
+            System.exit(1);
         }
     }
 

@@ -17,7 +17,7 @@ public class WrapDB {
 
     public void create(String name, StoreType<?> value) {
         synchronized (lock) {
-            this.hashMap.put(name, value);
+            this.hashMap.put(name.toLowerCase(), value);
         }
 
     }

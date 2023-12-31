@@ -53,6 +53,7 @@ public class CommandHandler {
     }
 
     public String handle(String[] args) {
+        args[0] = args[0].toLowerCase();
         if (!this.commands.containsKey(args[0])) {
             return Responses.COMMAND_NOT_FOUND.getParsed();
         }

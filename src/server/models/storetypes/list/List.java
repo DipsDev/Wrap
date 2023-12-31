@@ -5,28 +5,29 @@ import server.models.storetypes.StoreType;
 
 import java.util.ArrayList;
 
-public class List<T> implements StoreType<StoreType<?>> {
-    private ListNode<T> head;
-    private ListNode<T> tail;
+public class List implements StoreType<StoreType<?>> {
+    private ListNode<StoreType<?>> head;
+    private ListNode<StoreType<?>> tail;
     private int size;
 
 
     public List() {
     }
 
-    public void appendLast(T value) {
+    public void appendLast(StoreType<?> value) {
         size++;
         tail.setNext(new ListNode<>(value));
+        tail = tail.getNext();
     }
 
-    public void appendFirst(T value) {
-        ListNode<T> newHead = new ListNode<>(value);
+    public void appendFirst(StoreType<?> value) {
+        ListNode<StoreType<?>> newHead = new ListNode<>(value);
         newHead.setNext(head);
         head = newHead;
     }
 
-    public ListNode<T> traverseBackwards(int index) {
-        ListNode<T> node = this.tail;
+    public ListNode<StoreType<?>> traverseBackwards(int index) {
+        ListNode<StoreType<?>> node = this.tail;
         int counter = 0;
         while (node != null && size - counter > index) {
             node = node.getPrev();
@@ -35,8 +36,8 @@ public class List<T> implements StoreType<StoreType<?>> {
         return node;
 
     }
-    public ListNode<T> traverseForwards(int index) {
-        ListNode<T> node = this.tail;
+    public ListNode<StoreType<?>> traverseForwards(int index) {
+        ListNode<StoreType<?>> node = this.head;
         int counter = 0;
         while (node != null && counter < index) {
             node = node.getNext();
@@ -47,29 +48,31 @@ public class List<T> implements StoreType<StoreType<?>> {
     }
 
 
-    public void updateNode(int index, T newValue) {
+    public void updateNode(int index, StoreType<?> newValue) {
         if (index >= size) {
             return;
         }
         if (index > size / 2) {
-            ListNode<T> node = traverseBackwards(index);
+            ListNode<StoreType<?>> node = traverseBackwards(index);
             node.setValue(newValue);
             return;
         }
         traverseForwards(index).setValue(newValue);
     }
 
-    public java.util.List<T> range(int start, int finish) {
-        ArrayList<T> list = new ArrayList<>();
-        ListNode<T> node = traverseForwards(start);
+    public java.util.List<StoreType<?>> range(int start, int finish) {
+        ArrayList<StoreType<?>> list = new ArrayList<>();
+        ListNode<StoreType<?>> node = traverseForwards(start);
         int counter = finish - start;
-        while (counter > 0) {
+        while (node != null && counter > 0) {
             list.add(node.getValue());
             counter--;
+            node = node.getNext();
         }
         return list;
 
     }
+
 
 
 

@@ -3,13 +3,13 @@ package server.models.storetypes.list;
 import server.models.datatypes.DataType;
 import server.models.storetypes.StoreType;
 
-public class ListStore<T> implements StoreType<StoreType<T>> {
+public class ListStore implements StoreType<StoreType<?>> {
 
-    private final List<StoreType<T>> list;
+    private final List list;
     private final Object lock;
 
     public ListStore() {
-        this.list = new List<>();
+        this.list = new List();
         this.lock = new Object();
     }
     @Override
@@ -17,15 +17,19 @@ public class ListStore<T> implements StoreType<StoreType<T>> {
         return null;
     }
 
-    public void pushEnd(StoreType<T> value) {
+    public void pushEnd(StoreType<?> value) {
         synchronized (lock) {
             this.list.appendLast(value);
         }
     }
 
-    public void pushStart(StoreType<T> value) {
+    public void pushStart(StoreType<?> value) {
         synchronized (lock) {
             this.list.appendFirst(value);
         }
+    }
+
+    public java.util.List<StoreType<?>> range(int start, int finish) {
+        return this.list.range(start, finish);
     }
 }

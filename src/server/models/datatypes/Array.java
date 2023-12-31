@@ -1,5 +1,7 @@
 package server.models.datatypes;
 
+import server.models.storetypes.StoreType;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +11,14 @@ public class Array extends DataType {
      public Array() {
         super('*');
         list = new ArrayList<>();
+    }
+
+    public Array(List<StoreType<?>> list) {
+        super('*');
+        this.list = new ArrayList<>();
+        for (StoreType<?> type : list) {
+            this.list.add(type.prepare());
+        }
     }
 
     public void add(DataType item) {

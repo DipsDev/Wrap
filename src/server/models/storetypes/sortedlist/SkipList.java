@@ -2,9 +2,9 @@ package server.models.storetypes.sortedlist;
 
 import java.util.Random;
 
-public class SkipList {
+public class SkipList<T> {
 
-    private final SkipNode head;
+    private final SkipNode<T> head;
     private final int maxLevel;
 
     private int size;
@@ -13,7 +13,7 @@ public class SkipList {
 
     public SkipList(int maxLevel) {
         this.maxLevel = maxLevel;
-        this.head = new SkipNode(Integer.MIN_VALUE, maxLevel);
+        this.head = new SkipNode<T>(Integer.MIN_VALUE, null, maxLevel);
         this.size = 0;
     }
 
@@ -26,9 +26,9 @@ public class SkipList {
     }
 
 
-    public void insert(int value) {
-        SkipNode nd = this.head;
-        SkipNode newNode = new SkipNode(value, generateRandomHeight());
+    public void insert(int value, T data) {
+        SkipNode<T> nd = this.head;
+        SkipNode<T> newNode = new SkipNode<T>(value, data, generateRandomHeight());
         if (size == 0) {
             for (int i = 0; i<newNode.getLevel() + 1; i++) {
                 nd.getNext()[i] = newNode;
@@ -41,7 +41,7 @@ public class SkipList {
                 nd = nd.getNext()[i];
             }
         }
-        SkipNode next = nd.getNext()[0];
+        SkipNode<T> next = nd.getNext()[0];
         for(int i = 0; i<newNode.getLevel() + 1; i++) {
             newNode.getNext()[i] = next;
         }
@@ -51,8 +51,8 @@ public class SkipList {
         size++;
     }
 
-    public SkipNode search(int value) {
-        SkipNode nd = this.head;
+    public SkipNode<T> search(int value) {
+        SkipNode<T> nd = this.head;
         for (int i = this.maxLevel - 1; i >= 0; i--) {
             while (nd.getNext()[i] != null && nd.getNext()[i].getValue() <= value) {
                  nd = nd.getNext()[i];

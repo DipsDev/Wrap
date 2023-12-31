@@ -1,16 +1,18 @@
 package server.models.storetypes.sortedlist;
 
-public class SkipNode {
+public class SkipNode<T> {
 
 
     private int value;
-    private SkipNode[] next;
+    private T data;
+    private SkipNode<T>[] next;
 
     private int level;
 
 
-    public SkipNode(int value, int level) {
+    public SkipNode(int value, T data, int level) {
         this.value = value;
+        this.data = data;
         this.next = new SkipNode[level + 1];
         this.level = level;
     }
@@ -23,9 +25,10 @@ public class SkipNode {
         return value;
     }
 
-    public void setNext(SkipNode[] next) {
-        this.next = next;
+    public T getData() {
+        return this.data;
     }
+
 
     public SkipNode[] getNext() {
         return next;

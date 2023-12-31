@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-public class HashStore implements StoreType<StoreType<?>> {
+public class HashStore implements StoreType<StoreType<?>>, PrimitiveStoreType<StoreType<?>> {
 
     private HashMap<String, StoreType<?>> map;
 

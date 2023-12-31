@@ -3,7 +3,7 @@ package server.models.storetypes;
 import server.models.datatypes.DataType;
 import server.models.datatypes.SimpleString;
 
-public class StringStore implements StoreType<String> {
+public class StringStore implements StoreType<String>, PrimitiveStoreType<String> {
 
     private String value;
 

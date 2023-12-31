@@ -5,7 +5,7 @@ import server.models.datatypes.Integer;
 
 import java.util.regex.Pattern;
 
-public class IntegerStore implements StoreType<java.lang.Integer> {
+public class IntegerStore implements StoreType<java.lang.Integer>, PrimitiveStoreType<java.lang.Integer> {
     private int value;
 
     public static Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");

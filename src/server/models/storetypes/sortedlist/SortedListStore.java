@@ -44,15 +44,4 @@ public class SortedListStore implements StoreType<StoreType<?>> {
 
 
 
-    @Override
-    public void put(StoreType<?> value) {
-    }
-
-
-
-
-    @Override
-    public StoreType<?> get(String name) {
-        return null;
-    }
 }

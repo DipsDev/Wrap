@@ -25,6 +25,12 @@ public class SortedListStore implements StoreType<StoreType<?>> {
         }
     }
 
+    public int size() {
+        synchronized (lock) {
+            return this.list.getSize();
+        }
+    }
+
     public StoreType<?> search(int score) {
         synchronized (lock) {
             SkipNode<StoreType<?>> node = this.list.search(score);

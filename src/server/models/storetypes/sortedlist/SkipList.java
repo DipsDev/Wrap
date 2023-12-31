@@ -25,6 +25,9 @@ public class SkipList<T> {
         return level;
     }
 
+    public int getSize() {
+        return size;
+    }
 
     public void insert(int value, T data) {
         SkipNode<T> nd = this.head;

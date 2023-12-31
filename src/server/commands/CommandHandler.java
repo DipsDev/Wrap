@@ -28,6 +28,8 @@ public class CommandHandler {
         }
     }
 
+
+
     private void registerCommands() throws ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException {
         ClassLoader loader = ClassLoader.getSystemClassLoader();
         URL resource = loader.getResource(COMMANDS_LOCATION_URL);

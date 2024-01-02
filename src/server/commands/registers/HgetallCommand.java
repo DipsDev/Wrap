@@ -22,14 +22,13 @@ public class HgetallCommand implements Command {
 
     @Override
     public DataType execute(String[] args) {
-        StoreType data = WrapDB.getInstance().get(args[1]);
+        StoreType<?> data = WrapDB.getInstance().get(args[1]);
         if (data == null) {
             return new Null();
         }
-        if (!(data instanceof HashStore)) {
+        if (!(data instanceof HashStore store)) {
             return new SimpleError("NOTYPE Hget commands supports only hashmaps");
         }
-        HashStore store = (HashStore) data;
         return store.prepare();
     }
 }

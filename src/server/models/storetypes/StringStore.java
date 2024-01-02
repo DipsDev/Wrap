@@ -24,7 +24,7 @@ public class StringStore implements PrimitiveStoreType<String> {
     }
 
     @Override
-    public String get(String name) {
+    public String get() {
         return this.value;
     }
 }

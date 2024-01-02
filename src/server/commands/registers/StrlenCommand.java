@@ -31,6 +31,6 @@ public class StrlenCommand implements Command {
         if (!(data instanceof StringStore)) {
             return new SimpleError("ERR Get command only supports strings");
         }
-        return new Integer(((StringStore) data).get("").length());
+        return new Integer(((StringStore) data).get().length());
     }
 }

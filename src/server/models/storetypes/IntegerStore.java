@@ -26,7 +26,7 @@ public class IntegerStore implements PrimitiveStoreType<java.lang.Integer> {
     }
 
     @Override
-    public java.lang.Integer get(String name) {
+    public java.lang.Integer get() {
         return this.value;
     }
 

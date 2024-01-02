@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-public class HashStore implements StoreType<StoreType<?>>, PrimitiveStoreType<StoreType<?>> {
+public class HashStore implements StoreType<StoreType<?>>  {
 
     private HashMap<String, StoreType<?>> map;
 
@@ -45,9 +45,6 @@ public class HashStore implements StoreType<StoreType<?>>, PrimitiveStoreType<St
         return arr;
     }
 
-    @Override
-    public void put(StoreType<?> value) {
-    }
 
     public void put(String name, StoreType<?> value) {
         synchronized (lock) {
@@ -57,7 +54,6 @@ public class HashStore implements StoreType<StoreType<?>>, PrimitiveStoreType<St
     }
 
 
-    @Override
     public StoreType<?> get(String name) {
         synchronized (lock) {
             return this.map.get(name);

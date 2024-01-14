@@ -9,6 +9,7 @@ import server.models.datatypes.Null;
 import server.models.datatypes.SimpleError;
 import server.models.storetypes.StoreType;
 import server.models.storetypes.StringStore;
+import server.utils.Errors;
 
 @RegisteredCommand
 public class StrlenCommand implements Command {
@@ -29,7 +30,7 @@ public class StrlenCommand implements Command {
             return new Null();
         }
         if (!(data instanceof StringStore)) {
-            return new SimpleError("ERR Get command only supports strings");
+            return new SimpleError(Errors.WRONG_TYPE_PROVIDED);
         }
         return new Integer(((StringStore) data).get().length());
     }

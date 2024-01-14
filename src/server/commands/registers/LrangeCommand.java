@@ -9,6 +9,7 @@ import server.models.datatypes.SimpleError;
 import server.models.storetypes.IntegerStore;
 import server.models.storetypes.StoreType;
 import server.models.storetypes.list.ListStore;
+import server.utils.Errors;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,11 +33,11 @@ public class LrangeCommand implements Command {
             return new SimpleError("ERR List is null");
         }
         if (!IntegerStore.pattern.matcher(args[2]).matches() || !IntegerStore.pattern.matcher(args[3]).matches()) {
-            return new SimpleError("NOTYPE Command expects key and two integers, strings were given.");
+            return new SimpleError(Errors.WRONG_TYPE_PROVIDED);
 
         }
         if (!(type instanceof ListStore listStore)) {
-            return new SimpleError("NOTYPE Command works only list type");
+            return new SimpleError(Errors.WRONG_TYPE_PROVIDED);
         }
         List<StoreType<?>> list = listStore.range(Integer.parseInt(args[2]), Integer.parseInt(args[3]));
         return new Array(list);

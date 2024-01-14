@@ -1,14 +1,12 @@
 package server.commands;
 
 import server.models.datatypes.DataType;
-import server.utils.Responses;
+import server.utils.Errors;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.HashMap;
-import java.util.ServiceLoader;
 
 public class CommandHandler {
 
@@ -55,11 +53,11 @@ public class CommandHandler {
     public String handle(String[] args) {
         args[0] = args[0].toLowerCase();
         if (!this.commands.containsKey(args[0])) {
-            return Responses.COMMAND_NOT_FOUND.getParsed();
+            return "-" + Errors.COMMAND_NOT_FOUND.getParsed();
         }
         Command cmd = this.commands.get(args[0]);
         if (cmd.getArgsCount() + 1 > args.length) {
-            return Responses.NOT_ENOUGH_ARGS.getParsed();
+            return "-" + Errors.NOT_ENOUGH_ARGS.getParsed();
         }
         DataType returnType = cmd.execute(args);
         return returnType.encode();

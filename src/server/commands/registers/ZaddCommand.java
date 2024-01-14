@@ -9,6 +9,7 @@ import server.models.datatypes.SimpleString;
 import server.models.storetypes.IntegerStore;
 import server.models.storetypes.StoreType;
 import server.models.storetypes.sortedlist.SortedListStore;
+import server.utils.Errors;
 
 @RegisteredCommand
 public class ZaddCommand implements Command {
@@ -26,7 +27,7 @@ public class ZaddCommand implements Command {
     public DataType execute(String[] args) {
         StoreType<?>  currentData = WrapDB.getInstance().get(args[1]);
         if (!IntegerStore.pattern.matcher(args[2]).matches()) {
-            return new SimpleError("ERR Expected argument (score) to be a integer");
+            return new SimpleError(Errors.WRONG_TYPE_PROVIDED);
         }
         if (currentData == null) {
             SortedListStore list = new SortedListStore();
@@ -35,7 +36,7 @@ public class ZaddCommand implements Command {
             return new SimpleString("OK");
         }
         if (!(currentData instanceof SortedListStore)) {
-            return new SimpleError("NOTYPE Given key is already non sorted list value");
+            return new SimpleError(Errors.WRONG_TYPE_PROVIDED);
         }
         ((SortedListStore) currentData).put(Integer.parseInt(args[2]), StoreType.Factory.createStoreType(args[3]));
         return new SimpleString("OK");

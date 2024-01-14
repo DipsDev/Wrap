@@ -8,6 +8,7 @@ import server.models.datatypes.SimpleError;
 import server.models.datatypes.SimpleString;
 import server.models.storetypes.StoreType;
 import server.models.storetypes.StringStore;
+import server.utils.Errors;
 
 @RegisteredCommand
 public class SetCommand implements Command {
@@ -24,7 +25,7 @@ public class SetCommand implements Command {
     @Override
     public DataType execute(String[] args) {
         if (!args[2].startsWith("\"") || !args[2].endsWith("\"")) {
-            return new SimpleError("ERR Set command supports only strings");
+            return new SimpleError(Errors.WRONG_TYPE_PROVIDED);
         }
         if (!WrapDB.getInstance().exists(args[1])) {
             WrapDB.getInstance().create(args[1], new StringStore(args[2]));
@@ -34,7 +35,7 @@ public class SetCommand implements Command {
         if (get instanceof StringStore ss) {
             ss.put(args[2]);
         } else {
-            return new SimpleError("ERR Set command only works on strings");
+            return new SimpleError(Errors.WRONG_TYPE_PROVIDED);
         }
         return new SimpleString("OK");
     }

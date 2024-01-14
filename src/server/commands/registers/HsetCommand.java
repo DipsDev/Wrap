@@ -10,6 +10,8 @@ import server.models.storetypes.HashStore;
 import server.models.storetypes.IntegerStore;
 import server.models.storetypes.StoreType;
 import server.models.storetypes.StringStore;
+import server.utils.Errors;
+
 @RegisteredCommand
 public class HsetCommand implements Command {
     @Override
@@ -30,7 +32,7 @@ public class HsetCommand implements Command {
         if (data == null) {
             StoreType<?> newStore = StoreType.Factory.createStoreType(args[3]);
             if (newStore == null) {
-                return new SimpleError("NOTYPE Unknown type was given");
+                return new SimpleError(Errors.WRONG_TYPE_PROVIDED);
             }
             HashStore store = new HashStore();
             store.put(args[2], newStore);
@@ -38,12 +40,12 @@ public class HsetCommand implements Command {
             return new SimpleString("OK");
         }
         if (!(data instanceof HashStore)) {
-            return new SimpleError("NOTYPE Hset commands supports only hashmaps");
+            return new SimpleError(Errors.WRONG_TYPE_PROVIDED);
         }
         HashStore store = (HashStore) data;
         StoreType<?> newStore = StoreType.Factory.createStoreType(args[3]);
         if (newStore == null) {
-            return new SimpleError("NOTYPE Unknown type was given");
+            return new SimpleError(Errors.WRONG_TYPE_PROVIDED);
         }
         store.put(args[2], newStore);
         return new SimpleString("OK");

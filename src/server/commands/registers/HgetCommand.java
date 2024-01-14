@@ -10,6 +10,8 @@ import server.models.datatypes.SimpleString;
 import server.models.storetypes.HashStore;
 import server.models.storetypes.StoreType;
 import server.models.storetypes.StringStore;
+import server.utils.Errors;
+
 @RegisteredCommand
 public class HgetCommand implements Command {
     @Override
@@ -29,7 +31,7 @@ public class HgetCommand implements Command {
             return new Null();
         }
         if (!(data instanceof HashStore)) {
-            return new SimpleError("NOTYPE Hget commands supports only hashmaps");
+            return new SimpleError(Errors.WRONG_TYPE_PROVIDED);
         }
         HashStore store = (HashStore) data;
         return store.get(args[2]).prepare();

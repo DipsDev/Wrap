@@ -8,6 +8,8 @@ import server.models.datatypes.Null;
 import server.models.datatypes.SimpleError;
 import server.models.storetypes.HashStore;
 import server.models.storetypes.StoreType;
+import server.utils.Errors;
+
 @RegisteredCommand
 public class HkeysCommand implements Command {
     @Override
@@ -27,7 +29,7 @@ public class HkeysCommand implements Command {
             return new Null();
         }
         if (!(data instanceof HashStore)) {
-            return new SimpleError("NOTYPE Hget commands supports only hashmaps");
+            return new SimpleError(Errors.WRONG_TYPE_PROVIDED);
         }
         HashStore store = (HashStore) data;
         return store.prepareKeys();

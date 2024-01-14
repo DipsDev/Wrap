@@ -9,6 +9,8 @@ import server.models.datatypes.SimpleError;
 import server.models.datatypes.SimpleString;
 import server.models.storetypes.StoreType;
 import server.models.storetypes.StringStore;
+import server.utils.Errors;
+
 @RegisteredCommand
 public class GetCommand implements Command {
     @Override
@@ -28,7 +30,7 @@ public class GetCommand implements Command {
             return new Null();
         }
         if (!(data instanceof StringStore)) {
-            return new SimpleError("ERR Get command only supports strings");
+            return new SimpleError(Errors.WRONG_TYPE_PROVIDED);
         }
         return data.prepare();
     }

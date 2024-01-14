@@ -9,6 +9,7 @@ import server.models.datatypes.SimpleString;
 import server.models.storetypes.StoreType;
 import server.models.storetypes.list.List;
 import server.models.storetypes.list.ListStore;
+import server.utils.Errors;
 
 @RegisteredCommand
 public class LpushCommand implements Command {
@@ -33,7 +34,7 @@ public class LpushCommand implements Command {
             return new SimpleString("OK");
         }
         if (!(type instanceof ListStore list)) {
-            return new SimpleError("NOTYPE Command supports only list type");
+            return new SimpleError(Errors.WRONG_TYPE_PROVIDED);
         }
 
         StoreType<?> created = StoreType.Factory.createStoreType(args[2]);

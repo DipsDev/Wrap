@@ -16,13 +16,17 @@ public class List implements StoreType<StoreType<?>> {
 
     public void appendLast(StoreType<?> value) {
         size++;
-        tail.setNext(new ListNode<>(value));
+        ListNode<StoreType<?>> nd = new ListNode<>(value);
+        tail.setNext(nd);
+        nd.setPrev(tail);
         tail = tail.getNext();
+
     }
 
     public void appendFirst(StoreType<?> value) {
         ListNode<StoreType<?>> newHead = new ListNode<>(value);
         newHead.setNext(head);
+        head.setPrev(newHead);
         head = newHead;
     }
 

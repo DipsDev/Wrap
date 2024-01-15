@@ -24,6 +24,7 @@ public class List implements StoreType<StoreType<?>> {
     }
 
     public void appendFirst(StoreType<?> value) {
+        size++;
         ListNode<StoreType<?>> newHead = new ListNode<>(value);
         newHead.setNext(head);
         head.setPrev(newHead);

@@ -10,6 +10,8 @@ import server.models.storetypes.StoreType;
 import server.models.storetypes.StringStore;
 import server.utils.Errors;
 
+import java.util.Arrays;
+
 @RegisteredCommand
 public class SetCommand implements Command {
     @Override

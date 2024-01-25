@@ -78,18 +78,40 @@ public class ClientParser {
         int currentWordCount = 0;
         int arrCount = 0;
 
+        boolean isInsideString = false;
+
 
         for (int i = 0; i<commands.length(); i++) {
-            if (commands.charAt(i) == ' ') {
-                arrCount++;
-                builder.append("$")
-                        .append(currentWordCount)
-                        .append(terminator)
-                        .append(current)
-                        .append(terminator);
-                current.setLength(0);
-                currentWordCount = 0;
-            } else if (i == commands.length() - 1) {
+            if (commands.charAt(i) == '"') {
+                isInsideString = !isInsideString;
+                currentWordCount++;
+                if (i == commands.length() - 1) {
+                    arrCount++;
+                    builder.append("$")
+                            .append(currentWordCount)
+                            .append(terminator).append('"')
+                            .append(current)
+                            .append('"')
+                            .append(terminator);
+
+                }
+                continue;
+            }
+            if (isInsideString) {
+                current.append(commands.charAt(i));
+                currentWordCount++;
+            }
+            else {
+                if (commands.charAt(i) == ' ') {
+                    arrCount++;
+                    builder.append("$")
+                            .append(currentWordCount)
+                            .append(terminator)
+                            .append(current)
+                            .append(terminator);
+                    current.setLength(0);
+                    currentWordCount = 0;
+                } else if (i == commands.length() - 1) {
                     current.append(commands.charAt(i));
                     currentWordCount++;
                     arrCount++;
@@ -100,10 +122,10 @@ public class ClientParser {
                             .append(terminator);
                     current.setLength(0);
                     currentWordCount = 0;
-            }
-            else {
-                current.append(commands.charAt(i));
-                currentWordCount++;
+                } else {
+                    current.append(commands.charAt(i));
+                    currentWordCount++;
+                }
             }
         }
         return "*" + arrCount + terminator + builder;
